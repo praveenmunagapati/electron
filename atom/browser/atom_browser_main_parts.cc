@@ -20,6 +20,7 @@
 #include "base/command_line.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/icon_manager.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/service_manager_connection.h"
@@ -277,6 +278,12 @@ AtomBrowserMainParts::GetGeolocationControl() {
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
   connector->BindInterface(device::mojom::kServiceName, std::move(request));
   return geolocation_control_.get();
+}
+
+IconManager* AtomBrowserMainParts::GetIconManager() {
+  if (!icon_manager_.get())
+    icon_manager_.reset(new IconManager);
+  return icon_manager_.get();
 }
 
 }  // namespace atom

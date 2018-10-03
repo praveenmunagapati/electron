@@ -9,6 +9,12 @@ import("//electron/buildflags/buildflags.gni")
 source_set("chrome") {
   visibility = [ "//electron:electron_lib" ]
   sources = [
+    "//chrome/browser/icon_loader.cc",
+    "//chrome/browser/icon_loader.h",
+    "//chrome/browser/icon_loader_mac.mm",
+    "//chrome/browser/icon_loader_win.cc",
+    "//chrome/browser/icon_manager.cc",
+    "//chrome/browser/icon_manager.h",
     "//chrome/browser/ssl/security_state_tab_helper.cc",
     "//chrome/browser/ssl/security_state_tab_helper.h",
     "//chrome/common/chrome_constants.cc",
@@ -23,6 +29,10 @@ source_set("chrome") {
     "//chrome/common:constants",
     "//components/security_state/content",
   ]
+
+  if (is_linux) {
+    sources += [ "//chrome/browser/icon_loader_auralinux.cc" ]
+  }
 
   if (enable_desktop_capturer) {
     sources += [
